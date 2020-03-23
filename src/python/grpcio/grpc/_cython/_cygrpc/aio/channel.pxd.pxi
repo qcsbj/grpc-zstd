@@ -24,4 +24,3 @@ cdef class AioChannel:
         object loop
         bytes _target
         AioChannelStatus _status
-        bint _is_secure
