@@ -72,6 +72,9 @@ endif()
 set(gRPC_ZLIB_PROVIDER "module" CACHE STRING "Provider of zlib library")
 set_property(CACHE gRPC_ZLIB_PROVIDER PROPERTY STRINGS "module" "package")
 
+set(gRPC_ZSTD_PROVIDER "module" CACHE STRING "Provider of zstd library")
+set_property(CACHE gRPC_ZSTD_PROVIDER PROPERTY STRINGS "module" "package")
+
 set(gRPC_CARES_PROVIDER "module" CACHE STRING "Provider of c-ares library")
 set_property(CACHE gRPC_CARES_PROVIDER PROPERTY STRINGS "module" "package")
 
@@ -208,6 +211,7 @@ include(cmake/protobuf.cmake)
 include(cmake/ssl.cmake)
 include(cmake/upb.cmake)
 include(cmake/zlib.cmake)
+include(cmake/zstd.cmake)
 
 if(_gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_IOS)
   set(_gRPC_ALLTARGETS_LIBRARIES ${CMAKE_DL_LIBS} m pthread)
@@ -878,6 +882,7 @@ target_include_directories(address_sorting
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(address_sorting
   ${_gRPC_BASELIB_LIBRARIES}
@@ -1012,6 +1017,7 @@ target_include_directories(end2end_nosec_tests
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(end2end_nosec_tests
   ${_gRPC_ALLTARGETS_LIBRARIES}
@@ -1143,6 +1149,7 @@ target_include_directories(end2end_tests
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(end2end_tests
   ${_gRPC_SSL_LIBRARIES}
@@ -1227,6 +1234,7 @@ target_include_directories(gpr
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(gpr
   ${_gRPC_ALLTARGETS_LIBRARIES}
@@ -1730,11 +1738,13 @@ target_include_directories(grpc
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(grpc
   ${_gRPC_BASELIB_LIBRARIES}
   ${_gRPC_SSL_LIBRARIES}
   ${_gRPC_ZLIB_LIBRARIES}
+  ${_gRPC_ZSTD_LIBRARIES}
   ${_gRPC_CARES_LIBRARIES}
   ${_gRPC_ADDRESS_SORTING_LIBRARIES}
   ${_gRPC_UPB_LIBRARIES}
@@ -1813,6 +1823,7 @@ target_include_directories(grpc_csharp_ext
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(grpc_csharp_ext
   ${_gRPC_ALLTARGETS_LIBRARIES}
@@ -1875,6 +1886,7 @@ target_include_directories(grpc_test_util
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(grpc_test_util
   ${_gRPC_ALLTARGETS_LIBRARIES}
@@ -1940,6 +1952,7 @@ target_include_directories(grpc_test_util_unsecure
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(grpc_test_util_unsecure
   ${_gRPC_ALLTARGETS_LIBRARIES}
@@ -2308,10 +2321,12 @@ target_include_directories(grpc_unsecure
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(grpc_unsecure
   ${_gRPC_BASELIB_LIBRARIES}
   ${_gRPC_ZLIB_LIBRARIES}
+    ${_gRPC_ZSTD_LIBRARIES}
   ${_gRPC_CARES_LIBRARIES}
   ${_gRPC_ADDRESS_SORTING_LIBRARIES}
   ${_gRPC_UPB_LIBRARIES}
@@ -2403,6 +2418,7 @@ target_include_directories(benchmark_helpers
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -2502,6 +2518,7 @@ target_include_directories(grpc++
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 target_link_libraries(grpc++
@@ -2777,6 +2794,7 @@ target_include_directories(grpc++_alts
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 target_link_libraries(grpc++_alts
@@ -2846,6 +2864,7 @@ target_include_directories(grpc++_error_details
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 target_link_libraries(grpc++_error_details
@@ -2919,6 +2938,7 @@ target_include_directories(grpc++_reflection
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 target_link_libraries(grpc++_reflection
@@ -2987,6 +3007,7 @@ target_include_directories(grpc++_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -3052,6 +3073,7 @@ target_include_directories(grpc++_test_config
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -3107,6 +3129,7 @@ target_include_directories(grpc++_test_util
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -3196,6 +3219,7 @@ target_include_directories(grpc++_unsecure
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 target_link_libraries(grpc++_unsecure
@@ -3476,6 +3500,7 @@ target_include_directories(grpc_plugin_support
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 target_link_libraries(grpc_plugin_support
@@ -3543,6 +3568,7 @@ target_include_directories(grpcpp_channelz
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 target_link_libraries(grpcpp_channelz
@@ -3614,6 +3640,7 @@ target_include_directories(upb
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 target_link_libraries(upb
   ${_gRPC_ALLTARGETS_LIBRARIES}
@@ -3645,6 +3672,7 @@ target_include_directories(check_epollexclusive
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(check_epollexclusive
@@ -3669,6 +3697,7 @@ target_include_directories(gen_hpack_tables
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -3695,6 +3724,7 @@ target_include_directories(gen_legal_metadata_characters
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -3719,6 +3749,7 @@ target_include_directories(gen_percent_encoding_tables
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -3744,6 +3775,7 @@ target_include_directories(algorithm_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(algorithm_test
@@ -3773,6 +3805,7 @@ target_include_directories(alloc_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alloc_test
@@ -3802,6 +3835,7 @@ target_include_directories(alpn_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alpn_test
@@ -3832,6 +3866,7 @@ target_include_directories(alts_counter_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_counter_test
@@ -3862,6 +3897,7 @@ target_include_directories(alts_crypt_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_crypt_test
@@ -3892,6 +3928,7 @@ target_include_directories(alts_crypter_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_crypter_test
@@ -3923,6 +3960,7 @@ target_include_directories(alts_frame_protector_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_frame_protector_test
@@ -3953,6 +3991,7 @@ target_include_directories(alts_grpc_record_protocol_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_grpc_record_protocol_test
@@ -3983,6 +4022,7 @@ target_include_directories(alts_handshaker_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_handshaker_client_test
@@ -4013,6 +4053,7 @@ target_include_directories(alts_iovec_record_protocol_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_iovec_record_protocol_test
@@ -4042,6 +4083,7 @@ target_include_directories(alts_security_connector_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_security_connector_test
@@ -4072,6 +4114,7 @@ target_include_directories(alts_tsi_handshaker_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_tsi_handshaker_test
@@ -4102,6 +4145,7 @@ target_include_directories(alts_tsi_utils_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_tsi_utils_test
@@ -4132,6 +4176,7 @@ target_include_directories(alts_zero_copy_grpc_protector_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(alts_zero_copy_grpc_protector_test
@@ -4161,6 +4206,7 @@ target_include_directories(arena_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(arena_test
@@ -4190,6 +4236,7 @@ target_include_directories(auth_context_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(auth_context_test
@@ -4219,6 +4266,7 @@ target_include_directories(avl_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(avl_test
@@ -4248,6 +4296,7 @@ target_include_directories(b64_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(b64_test
@@ -4278,6 +4327,7 @@ target_include_directories(bad_server_response_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(bad_server_response_test
@@ -4309,6 +4359,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(bad_ssl_alpn_test
@@ -4341,6 +4392,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(bad_ssl_cert_test
@@ -4371,6 +4423,7 @@ target_include_directories(bin_decoder_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(bin_decoder_test
@@ -4400,6 +4453,7 @@ target_include_directories(bin_encoder_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(bin_encoder_test
@@ -4429,6 +4483,7 @@ target_include_directories(buffer_list_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(buffer_list_test
@@ -4458,6 +4513,7 @@ target_include_directories(channel_args_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(channel_args_test
@@ -4487,6 +4543,7 @@ target_include_directories(channel_create_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(channel_create_test
@@ -4516,6 +4573,7 @@ target_include_directories(channel_stack_builder_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(channel_stack_builder_test
@@ -4545,6 +4603,7 @@ target_include_directories(channel_stack_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(channel_stack_test
@@ -4574,6 +4633,7 @@ target_include_directories(check_gcp_environment_linux_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(check_gcp_environment_linux_test
@@ -4603,6 +4663,7 @@ target_include_directories(check_gcp_environment_windows_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(check_gcp_environment_windows_test
@@ -4633,6 +4694,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(client_ssl_test
@@ -4663,6 +4725,7 @@ target_include_directories(cmdline_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(cmdline_test
@@ -4693,6 +4756,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(combiner_test
@@ -4723,6 +4787,7 @@ target_include_directories(completion_queue_threading_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(completion_queue_threading_test
@@ -4752,6 +4817,7 @@ target_include_directories(compression_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(compression_test
@@ -4781,6 +4847,7 @@ target_include_directories(concurrent_connectivity_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(concurrent_connectivity_test
@@ -4811,6 +4878,7 @@ target_include_directories(connection_refused_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(connection_refused_test
@@ -4845,6 +4913,7 @@ target_include_directories(control_plane_credentials_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(control_plane_credentials_test
@@ -4874,6 +4943,7 @@ target_include_directories(cpu_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(cpu_test
@@ -4903,6 +4973,7 @@ target_include_directories(dns_resolver_connectivity_using_ares_resolver_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(dns_resolver_connectivity_using_ares_resolver_test
@@ -4932,6 +5003,7 @@ target_include_directories(dns_resolver_connectivity_using_native_resolver_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(dns_resolver_connectivity_using_native_resolver_test
@@ -4961,6 +5033,7 @@ target_include_directories(dns_resolver_cooldown_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(dns_resolver_cooldown_test
@@ -4990,6 +5063,7 @@ target_include_directories(dns_resolver_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(dns_resolver_test
@@ -5021,6 +5095,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(dualstack_socket_test
@@ -5052,6 +5127,7 @@ target_include_directories(endpoint_pair_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(endpoint_pair_test
@@ -5081,6 +5157,7 @@ target_include_directories(env_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(env_test
@@ -5111,6 +5188,7 @@ target_include_directories(error_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(error_test
@@ -5141,6 +5219,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(ev_epollex_linux_test
@@ -5171,6 +5250,7 @@ target_include_directories(fake_resolver_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(fake_resolver_test
@@ -5201,6 +5281,7 @@ target_include_directories(fake_transport_security_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(fake_transport_security_test
@@ -5231,6 +5312,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(fd_conservation_posix_test
@@ -5262,6 +5344,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(fd_posix_test
@@ -5297,6 +5380,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(fling_stream_test
@@ -5332,6 +5416,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(fling_test
@@ -5363,6 +5448,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(fork_test
@@ -5397,6 +5483,7 @@ target_include_directories(format_request_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(format_request_test
@@ -5427,6 +5514,7 @@ target_include_directories(frame_handler_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(frame_handler_test
@@ -5457,6 +5545,7 @@ target_include_directories(goaway_server_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(goaway_server_test
@@ -5486,6 +5575,7 @@ target_include_directories(grpc_alts_credentials_options_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(grpc_alts_credentials_options_test
@@ -5515,6 +5605,7 @@ target_include_directories(grpc_byte_buffer_reader_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(grpc_byte_buffer_reader_test
@@ -5544,6 +5635,7 @@ target_include_directories(grpc_completion_queue_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(grpc_completion_queue_test
@@ -5573,6 +5665,7 @@ target_include_directories(grpc_ipv6_loopback_available_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(grpc_ipv6_loopback_available_test
@@ -5604,6 +5697,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(handshake_server_with_readahead_handshaker_test
@@ -5635,6 +5729,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(handshake_verify_peer_options_test
@@ -5665,6 +5760,7 @@ target_include_directories(histogram_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(histogram_test
@@ -5694,6 +5790,7 @@ target_include_directories(host_port_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(host_port_test
@@ -5723,6 +5820,7 @@ target_include_directories(hpack_encoder_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(hpack_encoder_test
@@ -5752,6 +5850,7 @@ target_include_directories(hpack_parser_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(hpack_parser_test
@@ -5781,6 +5880,7 @@ target_include_directories(hpack_table_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(hpack_table_test
@@ -5815,6 +5915,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(httpcli_test
@@ -5850,6 +5951,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(httpscli_test
@@ -5880,6 +5982,7 @@ target_include_directories(init_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(init_test
@@ -5909,6 +6012,7 @@ target_include_directories(inproc_callback_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(inproc_callback_test
@@ -5940,6 +6044,7 @@ target_include_directories(invalid_call_argument_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(invalid_call_argument_test
@@ -5969,6 +6074,7 @@ target_include_directories(json_token_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(json_token_test
@@ -5998,6 +6104,7 @@ target_include_directories(jwt_verifier_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(jwt_verifier_test
@@ -6028,6 +6135,7 @@ target_include_directories(lame_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(lame_client_test
@@ -6057,6 +6165,7 @@ target_include_directories(load_file_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(load_file_test
@@ -6086,6 +6195,7 @@ target_include_directories(log_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(log_test
@@ -6115,6 +6225,7 @@ target_include_directories(manual_constructor_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(manual_constructor_test
@@ -6144,6 +6255,7 @@ target_include_directories(message_compress_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(message_compress_test
@@ -6173,6 +6285,7 @@ target_include_directories(metadata_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(metadata_test
@@ -6202,6 +6315,7 @@ target_include_directories(minimal_stack_is_minimal_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(minimal_stack_is_minimal_test
@@ -6231,6 +6345,7 @@ target_include_directories(mpmcqueue_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(mpmcqueue_test
@@ -6261,6 +6376,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(mpscq_test
@@ -6292,6 +6408,7 @@ target_include_directories(multiple_server_queues_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(multiple_server_queues_test
@@ -6321,6 +6438,7 @@ target_include_directories(murmur_hash_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(murmur_hash_test
@@ -6351,6 +6469,7 @@ target_include_directories(no_server_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(no_server_test
@@ -6384,6 +6503,7 @@ target_include_directories(num_external_connectivity_watchers_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(num_external_connectivity_watchers_test
@@ -6413,6 +6533,7 @@ target_include_directories(parse_address_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(parse_address_test
@@ -6443,6 +6564,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(parse_address_with_named_scope_id_test
@@ -6477,6 +6599,7 @@ target_include_directories(parser_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(parser_test
@@ -6506,6 +6629,7 @@ target_include_directories(percent_encoding_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(percent_encoding_test
@@ -6535,6 +6659,7 @@ target_include_directories(public_headers_must_be_c89
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(public_headers_must_be_c89
@@ -6565,6 +6690,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(resolve_address_using_ares_resolver_posix_test
@@ -6595,6 +6721,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(resolve_address_using_ares_resolver_test
@@ -6625,6 +6752,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(resolve_address_using_native_resolver_posix_test
@@ -6655,6 +6783,7 @@ target_include_directories(resolve_address_using_native_resolver_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(resolve_address_using_native_resolver_test
@@ -6684,6 +6813,7 @@ target_include_directories(resource_quota_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(resource_quota_test
@@ -6713,6 +6843,7 @@ target_include_directories(secure_channel_create_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(secure_channel_create_test
@@ -6743,6 +6874,7 @@ target_include_directories(secure_endpoint_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(secure_endpoint_test
@@ -6772,6 +6904,7 @@ target_include_directories(security_connector_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(security_connector_test
@@ -6805,6 +6938,7 @@ target_include_directories(sequential_connectivity_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(sequential_connectivity_test
@@ -6834,6 +6968,7 @@ target_include_directories(server_chttp2_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(server_chttp2_test
@@ -6865,6 +7000,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(server_ssl_test
@@ -6895,6 +7031,7 @@ target_include_directories(server_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(server_test
@@ -6924,6 +7061,7 @@ target_include_directories(slice_buffer_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(slice_buffer_test
@@ -6953,6 +7091,7 @@ target_include_directories(slice_string_helpers_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(slice_string_helpers_test
@@ -6982,6 +7121,7 @@ target_include_directories(sockaddr_resolver_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(sockaddr_resolver_test
@@ -7011,6 +7151,7 @@ target_include_directories(sockaddr_utils_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(sockaddr_utils_test
@@ -7041,6 +7182,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(socket_utils_test
@@ -7071,6 +7213,7 @@ target_include_directories(spinlock_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(spinlock_test
@@ -7100,6 +7243,7 @@ target_include_directories(ssl_credentials_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(ssl_credentials_test
@@ -7131,6 +7275,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(ssl_transport_security_test
@@ -7161,6 +7306,7 @@ target_include_directories(status_conversion_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(status_conversion_test
@@ -7190,6 +7336,7 @@ target_include_directories(stream_compression_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(stream_compression_test
@@ -7219,6 +7366,7 @@ target_include_directories(stream_map_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(stream_map_test
@@ -7248,6 +7396,7 @@ target_include_directories(stream_owned_slice_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(stream_owned_slice_test
@@ -7277,6 +7426,7 @@ target_include_directories(string_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(string_test
@@ -7306,6 +7456,7 @@ target_include_directories(sync_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(sync_test
@@ -7336,6 +7487,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(tcp_client_posix_test
@@ -7368,6 +7520,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(tcp_posix_test
@@ -7399,6 +7552,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(tcp_server_posix_test
@@ -7429,6 +7583,7 @@ target_include_directories(test_core_gpr_time_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(test_core_gpr_time_test
@@ -7458,6 +7613,7 @@ target_include_directories(test_core_security_credentials_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(test_core_security_credentials_test
@@ -7487,6 +7643,7 @@ target_include_directories(test_core_slice_slice_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(test_core_slice_slice_test
@@ -7516,6 +7673,7 @@ target_include_directories(thd_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(thd_test
@@ -7545,6 +7703,7 @@ target_include_directories(threadpool_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(threadpool_test
@@ -7574,6 +7733,7 @@ target_include_directories(time_averaged_stats_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(time_averaged_stats_test
@@ -7603,6 +7763,7 @@ target_include_directories(timeout_encoding_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(timeout_encoding_test
@@ -7632,6 +7793,7 @@ target_include_directories(timer_heap_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(timer_heap_test
@@ -7661,6 +7823,7 @@ target_include_directories(timer_list_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(timer_list_test
@@ -7690,6 +7853,7 @@ target_include_directories(tls_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(tls_test
@@ -7719,6 +7883,7 @@ target_include_directories(transport_security_common_api_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(transport_security_common_api_test
@@ -7748,6 +7913,7 @@ target_include_directories(transport_security_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(transport_security_test
@@ -7778,6 +7944,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
   )
 
   target_link_libraries(udp_server_test
@@ -7808,6 +7975,7 @@ target_include_directories(uri_parser_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(uri_parser_test
@@ -7837,6 +8005,7 @@ target_include_directories(useful_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(useful_test
@@ -7866,6 +8035,7 @@ target_include_directories(varint_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
 )
 
 target_link_libraries(varint_test
@@ -7898,6 +8068,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -7944,6 +8115,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -7986,6 +8158,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8037,6 +8210,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8077,6 +8251,7 @@ target_include_directories(alts_util_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -8138,6 +8313,7 @@ target_include_directories(async_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -8178,6 +8354,7 @@ target_include_directories(auth_property_iterator_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -8218,6 +8395,7 @@ target_include_directories(backoff_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -8258,6 +8436,7 @@ target_include_directories(bad_streaming_id_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -8298,6 +8477,7 @@ target_include_directories(badreq_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -8337,6 +8517,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8377,6 +8558,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8421,6 +8603,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8465,6 +8648,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8509,6 +8693,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8557,6 +8742,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8605,6 +8791,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8649,6 +8836,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8693,6 +8881,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8737,6 +8926,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8781,6 +8971,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8825,6 +9016,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8869,6 +9061,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8913,6 +9106,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -8957,6 +9151,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -9001,6 +9196,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -9045,6 +9241,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -9089,6 +9286,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -9133,6 +9331,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -9177,6 +9376,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -9221,6 +9421,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -9265,6 +9466,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -9308,6 +9510,7 @@ target_include_directories(byte_buffer_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9348,6 +9551,7 @@ target_include_directories(byte_stream_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9388,6 +9592,7 @@ target_include_directories(cancel_ares_query_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9442,6 +9647,7 @@ target_include_directories(cfstream_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9482,6 +9688,7 @@ target_include_directories(channel_arguments_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9521,6 +9728,7 @@ target_include_directories(channel_filter_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9565,6 +9773,7 @@ target_include_directories(channel_trace_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9604,6 +9813,7 @@ target_include_directories(channelz_registry_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9656,6 +9866,7 @@ target_include_directories(channelz_service_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9702,6 +9913,7 @@ target_include_directories(channelz_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9763,6 +9975,7 @@ target_include_directories(cli_call_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9817,6 +10030,7 @@ target_include_directories(client_callback_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9879,6 +10093,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -9934,6 +10149,7 @@ target_include_directories(client_interceptors_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -9997,6 +10213,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -10038,6 +10255,7 @@ target_include_directories(codegen_test_full
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10077,6 +10295,7 @@ target_include_directories(codegen_test_minimal
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10118,6 +10337,7 @@ target_include_directories(connection_prefix_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10156,6 +10376,7 @@ target_include_directories(connectivity_state_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10194,6 +10415,7 @@ target_include_directories(context_list_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10245,6 +10467,7 @@ target_include_directories(delegating_channel_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10285,6 +10508,7 @@ target_include_directories(destroy_grpclb_channel_with_active_connect_stress_tes
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10327,6 +10551,7 @@ target_include_directories(duplicate_header_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10383,6 +10608,7 @@ target_include_directories(end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10428,6 +10654,7 @@ target_include_directories(error_details_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10468,6 +10695,7 @@ target_include_directories(eventmanager_libuv_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10518,6 +10746,7 @@ target_include_directories(exception_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10574,6 +10803,7 @@ target_include_directories(filter_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10627,6 +10857,7 @@ target_include_directories(flaky_network_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10683,6 +10914,7 @@ target_include_directories(generic_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10724,6 +10956,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -10763,6 +10996,7 @@ target_include_directories(global_config_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10811,6 +11045,7 @@ target_include_directories(grpc_cli
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -10848,6 +11083,7 @@ target_include_directories(grpc_cpp_plugin
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -10885,6 +11121,7 @@ target_include_directories(grpc_csharp_plugin
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -10922,6 +11159,7 @@ target_include_directories(grpc_node_plugin
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -10959,6 +11197,7 @@ target_include_directories(grpc_objective_c_plugin
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -10996,6 +11235,7 @@ target_include_directories(grpc_php_plugin
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -11033,6 +11273,7 @@ target_include_directories(grpc_python_plugin
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -11070,6 +11311,7 @@ target_include_directories(grpc_ruby_plugin
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     ${_gRPC_PROTO_GENS_DIR}
 )
 
@@ -11113,6 +11355,7 @@ target_include_directories(grpc_tls_credentials_options_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11170,6 +11413,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -11216,6 +11460,7 @@ target_include_directories(grpclb_api_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11278,6 +11523,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -11319,6 +11565,7 @@ target_include_directories(h2_ssl_session_reuse_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11360,6 +11607,7 @@ target_include_directories(head_of_line_blocking_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11400,6 +11648,7 @@ target_include_directories(headers_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11460,6 +11709,7 @@ target_include_directories(health_service_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11512,6 +11762,7 @@ target_include_directories(http2_client
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11570,6 +11821,7 @@ target_include_directories(hybrid_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11612,6 +11864,7 @@ target_include_directories(initial_settings_frame_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11665,6 +11918,7 @@ target_include_directories(interop_client
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11720,6 +11974,7 @@ target_include_directories(interop_server
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11762,6 +12017,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -11804,6 +12060,7 @@ target_include_directories(json_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11844,6 +12101,7 @@ target_include_directories(large_metadata_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11886,6 +12144,7 @@ target_include_directories(lb_get_cpu_stats_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11926,6 +12185,7 @@ target_include_directories(lb_load_data_store_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -11965,6 +12225,7 @@ target_include_directories(linux_system_roots_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12016,6 +12277,7 @@ target_include_directories(message_allocator_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12072,6 +12334,7 @@ target_include_directories(mock_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12125,6 +12388,7 @@ target_include_directories(nonblocking_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12165,6 +12429,7 @@ target_include_directories(noop-benchmark
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12204,6 +12469,7 @@ target_include_directories(optional_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12242,6 +12508,7 @@ target_include_directories(orphanable_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12282,6 +12549,7 @@ target_include_directories(out_of_bounds_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12320,6 +12588,7 @@ target_include_directories(pid_controller_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12371,6 +12640,7 @@ target_include_directories(port_sharing_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12429,6 +12699,7 @@ target_include_directories(proto_server_reflection_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12470,6 +12741,7 @@ target_include_directories(proto_utils_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12555,6 +12827,7 @@ target_include_directories(qps_json_driver
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12634,6 +12907,7 @@ target_include_directories(qps_worker
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12692,6 +12966,7 @@ target_include_directories(raw_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12732,6 +13007,7 @@ target_include_directories(ref_counted_ptr_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12770,6 +13046,7 @@ target_include_directories(ref_counted_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12808,6 +13085,7 @@ target_include_directories(retry_throttle_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12846,6 +13124,7 @@ target_include_directories(secure_auth_context_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12903,6 +13182,7 @@ target_include_directories(server_builder_plugin_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -12956,6 +13236,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -13009,6 +13290,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -13049,6 +13331,7 @@ target_include_directories(server_context_test_spouse_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13102,6 +13385,7 @@ target_include_directories(server_early_return_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13156,6 +13440,7 @@ target_include_directories(server_interceptors_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13198,6 +13483,7 @@ target_include_directories(server_registered_method_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13249,6 +13535,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -13306,6 +13593,7 @@ target_include_directories(service_config_end2end_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13346,6 +13634,7 @@ target_include_directories(service_config_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13384,6 +13673,7 @@ target_include_directories(settings_timeout_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13438,6 +13728,7 @@ target_include_directories(shutdown_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13480,6 +13771,7 @@ target_include_directories(simple_request_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13518,6 +13810,7 @@ target_include_directories(slice_hash_table_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13556,6 +13849,7 @@ target_include_directories(slice_weak_hash_table_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13594,6 +13888,7 @@ target_include_directories(static_metadata_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13632,6 +13927,7 @@ target_include_directories(stats_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13670,6 +13966,7 @@ target_include_directories(status_metadata_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13708,6 +14005,7 @@ target_include_directories(status_util_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13763,6 +14061,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -13804,6 +14103,7 @@ target_include_directories(string_ref_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13843,6 +14143,7 @@ target_include_directories(string_view_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13881,6 +14182,7 @@ target_include_directories(test_cpp_client_credentials_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13920,6 +14222,7 @@ target_include_directories(test_cpp_util_slice_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -13960,6 +14263,7 @@ target_include_directories(test_cpp_util_time_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14000,6 +14304,7 @@ target_include_directories(thread_manager_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14058,6 +14363,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -14100,6 +14406,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -14140,6 +14447,7 @@ target_include_directories(timer_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14183,6 +14491,7 @@ target_include_directories(tls_security_connector_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14223,6 +14532,7 @@ target_include_directories(unknown_frame_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14263,6 +14573,7 @@ target_include_directories(window_overflow_bad_client_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14302,6 +14613,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -14374,6 +14686,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -14413,6 +14726,7 @@ target_include_directories(xds_bootstrap_test
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14489,6 +14803,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
       ${_gRPC_UPB_GRPC_GENERATED_DIR}
       ${_gRPC_UPB_INCLUDE_DIR}
       ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
       third_party/googletest/googletest/include
       third_party/googletest/googletest
       third_party/googletest/googlemock/include
@@ -14542,6 +14857,7 @@ target_include_directories(xds_interop_client
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14594,6 +14910,7 @@ target_include_directories(xds_interop_server
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14635,6 +14952,7 @@ target_include_directories(alts_credentials_fuzzer_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14675,6 +14993,7 @@ target_include_directories(client_fuzzer_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14715,6 +15034,7 @@ target_include_directories(hpack_parser_fuzzer_test_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14755,6 +15075,7 @@ target_include_directories(http_request_fuzzer_test_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14795,6 +15116,7 @@ target_include_directories(http_response_fuzzer_test_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14835,6 +15157,7 @@ target_include_directories(json_fuzzer_test_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14875,6 +15198,7 @@ target_include_directories(nanopb_fuzzer_response_test_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14915,6 +15239,7 @@ target_include_directories(nanopb_fuzzer_serverlist_test_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14955,6 +15280,7 @@ target_include_directories(percent_decode_fuzzer_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -14995,6 +15321,7 @@ target_include_directories(percent_encode_fuzzer_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -15035,6 +15362,7 @@ target_include_directories(server_fuzzer_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -15079,6 +15407,7 @@ target_include_directories(ssl_server_fuzzer_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include
@@ -15119,6 +15448,7 @@ target_include_directories(uri_fuzzer_test_one_entry
     ${_gRPC_UPB_GRPC_GENERATED_DIR}
     ${_gRPC_UPB_INCLUDE_DIR}
     ${_gRPC_ZLIB_INCLUDE_DIR}
+    ${_gRPC_ZSTD_INCLUDE_DIR}
     third_party/googletest/googletest/include
     third_party/googletest/googletest
     third_party/googletest/googlemock/include

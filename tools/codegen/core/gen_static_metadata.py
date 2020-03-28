@@ -70,7 +70,9 @@ CONFIG = [
     # compression algorithm names
     'deflate',
     'gzip',
+    'zstd',
     'stream/gzip',
+    'stream/zstd',
     # metadata elements
     # begin hpack static elements
     (':authority', ''),
@@ -88,7 +90,8 @@ CONFIG = [
     (':status', '404'),
     (':status', '500'),
     ('accept-charset', ''),
-    ('accept-encoding', 'gzip, deflate'),
+    ('accept-encoding', 'gzip,deflate'),
+    ('accept-encoding', 'zstd'),
     ('accept-language', ''),
     ('accept-ranges', ''),
     ('accept', ''),
@@ -141,6 +144,7 @@ CONFIG = [
     ('grpc-encoding', 'identity'),
     ('grpc-encoding', 'gzip'),
     ('grpc-encoding', 'deflate'),
+    ('grpc-encoding', 'zstd'),
     ('te', 'trailers'),
     ('content-type', 'application/grpc'),
     (':scheme', 'grpc'),
@@ -148,6 +152,7 @@ CONFIG = [
     ('accept-encoding', ''),
     ('content-encoding', 'identity'),
     ('content-encoding', 'gzip'),
+    ('content-encoding', 'zstd'),
     ('lb-cost-bin', ''),
 ]
 
@@ -184,11 +189,13 @@ COMPRESSION_ALGORITHMS = [
     'identity',
     'deflate',
     'gzip',
+    'zstd'
 ]
 
 STREAM_COMPRESSION_ALGORITHMS = [
     'identity',
     'gzip',
+    'zstd'
 ]
 
 

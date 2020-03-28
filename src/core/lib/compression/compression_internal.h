@@ -28,11 +28,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 typedef enum {
   GRPC_MESSAGE_COMPRESS_NONE = 0,
   GRPC_MESSAGE_COMPRESS_DEFLATE,
   GRPC_MESSAGE_COMPRESS_GZIP,
+  GRPC_MESSAGE_COMPRESS_ZSTD,
   /* TODO(ctiller): snappy */
   GRPC_MESSAGE_COMPRESS_ALGORITHMS_COUNT
 } grpc_message_compression_algorithm;
@@ -41,6 +41,7 @@ typedef enum {
 typedef enum {
   GRPC_STREAM_COMPRESS_NONE = 0,
   GRPC_STREAM_COMPRESS_GZIP,
+  GRPC_STREAM_COMPRESS_ZSTD,
   GRPC_STREAM_COMPRESS_ALGORITHMS_COUNT
 } grpc_stream_compression_algorithm;
 
